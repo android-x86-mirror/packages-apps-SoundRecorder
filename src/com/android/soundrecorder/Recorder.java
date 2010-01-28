@@ -8,6 +8,7 @@ import android.media.MediaRecorder;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.os.Environment;
 import android.util.Log;
 
@@ -149,6 +150,8 @@ public class Recorder implements OnCompletionListener, OnErrorListener {
         // Handle IOException
         try {
             mRecorder.prepare();
+            FileUtils.setPermissions(mSampleFile.getAbsolutePath(),
+                        FileUtils.S_IRUSR|FileUtils.S_IWUSR|FileUtils.S_IRGRP|FileUtils.S_IROTH,-1,-1);
         } catch(IOException exception) {
             setError(INTERNAL_ERROR);
             mRecorder.reset();
